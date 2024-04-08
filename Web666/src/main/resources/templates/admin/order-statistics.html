@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Statistics</title>
+	<div th:replace="~{/common/tv_admin/head}"></div>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body ng-app="admin-app" ng-controller="thongke-ctrl" class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <div th:replace="~{/common/tv_admin/header}"></div>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+
+            <div class="m-5">
+                <div class="content-header">
+					<div class="container-fluid">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+								<h1 class="m-0">Thống kê</h1>
+							</div>
+							<!-- /.col -->
+
+							<!-- /.col -->
+						</div>
+						<!-- /.row -->
+					</div>
+					<!-- /.container-fluid -->
+				</div>
+                
+                <div class="col-md-12">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        <div class="col-lg-3 col-6" id="totalOrders">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3></h3>
+                                    <p>Đơn hàng</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6" id="totalAmount">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>
+                                        
+                                    </h3>
+                                    <p>Tổng tiền</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6" id="totalCustomers">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3></h3>
+                                    <p>Tổng số khách hàng</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6" id="totalQuantity">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3></h3>
+                                    <p>Tổng số lượng</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                
+
+
+                <div ng-init="getStatistics(7)" class="mt-3">
+                    <p>Lọc theo</p>
+                    <a ng-click="getStatistics(7)" class="btn btn-success">7 Ngày</a> <a
+                    ng-click="getStatistics(30)" class="btn btn-success">1 Tháng</a> <a
+                    ng-click="getStatistics(90)" class="btn btn-success">3 Tháng</a> <a
+                    ng-click="getStatistics(365)" class="btn btn-success">1 Năm</a>
+                </div>
+
+                <div class="mb-3">
+                    <canvas id="orderChart" width="400" height="200"></canvas>
+                </div>
+                
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+           
+
+        </div>
+
+
+
+
+
+        <div th:replace="~{/common/tv_admin/footeradmin}"></div>
+    </div>
+    <div th:replace="~{/common/tv_admin/js}"></div>
+
+</body>
+
+</html>

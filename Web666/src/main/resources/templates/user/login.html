@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Insert title here</title>
+    <div th:replace="~{/common/user/head}"></div>
+</head>
+
+<body  ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+    <!--pos page start-->
+    <div class="pos_page">
+        <div class="container">
+            <!--pos page inner-->
+            <div class="pos_page_inner">
+
+                <div th:replace="~{/common/user/header}"></div>
+                <!--breadcrumbs area start-->
+                <div class="breadcrumbs_area">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb_content">
+                                <ul>
+                                    <li><a href="index.html">home</a></li>
+                                    <li><i class="fa fa-angle-right"></i></li>
+                                    <li>Đăng nhập</li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--breadcrumbs area end-->
+
+                <!-- customer login start -->
+                <div class="customer_login">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3"></div>
+                        <!--login area start-->
+                        <div class="col-lg-6 col-md-6">
+                            <div class="account_form">
+                                <h2>login</h2>
+                                <form th:action="@{/security/login}" method="post">
+                                    <p>
+                                        <label>Username  <span>*</span></label>
+                                        <input type="text" id="username" name="username" required>
+                                    </p>
+                                    <p>
+                                        <label>Passwords <span>*</span></label>
+                                        <input type="password" id="password" name="password" required>
+                                    </p>
+                                    <div class="login_submit">
+                                        <button type="submit">login</button>
+                                        <label for="rememberMe"> 
+											<input id="rememberMe" type="checkbox" name="remember-me"> Remember me
+										</label>
+                                        <a href="#">Lost your password?</a>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <!-- Display messages -->
+                            <div th:if="${ms}" class="alert alert-info" role="alert" th:text="${ms}"></div>
+                        </div>
+                        <!--login area start-->
+                        <div class="col-lg-3 col-md-3"></div>
+                    </div>
+                </div>
+                <!-- customer login end -->
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{/common/user/js}"></div>
+    <div th:replace="~{/common/user/footer}"></div>
+
+
+
+</body>
+
+</html>

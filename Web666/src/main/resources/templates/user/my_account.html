@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+	<div th:replace="~{/common/user/head}"></div>
+</head>
+
+<body class="" ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+	<!--pos page start-->
+	<div class="pos_page">
+		<div class="container">
+			<!--pos page inner-->
+			<div class="pos_page_inner">
+				<div th:replace="~{/common/user/header}"></div>
+
+
+				<!--breadcrumbs area start-->
+				<div class="breadcrumbs_area">
+					<div class="row">
+						<div class="col-12">
+							<div class="breadcrumb_content">
+								<ul>
+									<li><a href="index.html">home</a></li>
+									<li><i class="fa fa-angle-right"></i></li>
+									<li>Tài khoản của tôi</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--breadcrumbs area end-->
+
+
+				<!-- Start Maincontent  -->
+				<section class="main_content_area">
+					<div class="account_dashboard">
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3">
+								<!-- Nav tabs -->
+								<div class="dashboard_tab_button">
+									<ul role="tablist" class="nav flex-column dashboard-list">
+
+										<li><a th:href="@{/order/list}" data-toggle="tab" class="nav-link ">Orders
+												List</a>
+										</li>
+
+										<li><a th:href="@{/user/account}" data-toggle="tab"
+												class="nav-link active">Account
+												details</a></li>
+										<li><a th:href="@{/security/logoff}" class="nav-link">logout</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-9 col-lg-9">
+								<!-- Tab panes -->
+								<div class="tab-content dashboard_content">
+
+
+
+
+									<div class="tab-pane fade show active" id="account-details">
+										<h3>Account details</h3>
+										<div class="login">
+											<div class="login_form_container">
+												<div class="account_login_form">
+													<form action="#">
+														<div class="row">
+															<div class="col-6">
+																<label>Username</label> <input type="text"
+																	ng-model="form.username">
+																<label>Password</label>
+																<input type="password" name="user-password"
+																	ng-model="form.password">
+																<label>Full Name</label> <input type="text"
+																	ng-model="form.fullname">
+																<label>Email</label>
+																<input type="text" name="email-name"
+																	ng-model="form.email">
+
+																<label>Địa chỉ</label> <input type="text"
+																	ng-model="form.account_adress">
+																<label>Phone</label> <input type="text"
+																	ng-model="form.phone">
+															</div>
+															<div class="col-6">
+																<label for="">Hình ảnh</label>
+																<div
+																	style="width: 85%; height: 70%; border: 1px dotted gray">
+
+																	<img ng-src="{{'/assets/images/'+form.photo}}"
+																		style="max-width: 100%; max-height: 100%;" />
+																</div>
+																<div class=" mt-3">
+																	<label for="exampleInputFile">Image</label>
+																	<div class="input-group">
+																		<div class="custom-file">
+																			<input type="file" id="photo" name="photo"
+																				onchange="angular.element(this).scope().imageChanged(this.files)">
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="save_button primary_btn default_button ">
+															<a href="#" ng-click="update()">Save</a>
+														</div>
+													</form>
+
+													<div style="margin: 1%" ng-if="message">
+														<div ng-style="{'background-color': isSuccess() ? 'lightgreen' : 'lightcoral'}"
+															class="alert"
+															ng-class="{'alert-success': isSuccess(), 'alert-danger': !isSuccess()}">
+															{{ message }}
+														</div>
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- End Maincontent  -->
+
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{/common/user/js}"></div>
+	<div th:replace="~{/common/user/footer}"></div>
+
+
+</body>
+
+</html>

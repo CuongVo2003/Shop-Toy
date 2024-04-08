@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+	<div th:replace="~{/common/user/head}"></div>
+</head>
+
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+	<div class="pos_page">
+		<div class="container">
+			<!--pos page inner-->
+			<div class="pos_page_inner">
+
+
+				<div th:replace="~{/common/user/header}"></div>
+
+
+				<!--breadcrumbs area start-->
+				<div class="breadcrumbs_area">
+					<div class="row">
+						<div class="col-12">
+							<div class="breadcrumb_content">
+								<ul>
+									<li><a href="#">home</a></li>
+									<li><i class="fa fa-angle-right"></i></li>
+									<li>Thanh Toán</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--breadcrumbs area end-->
+
+
+				<!--Checkout page section-->
+				<div class="Checkout_section">
+
+					<div class="checkout_form">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+								<form action="#">
+									<h3>Billing Details</h3>
+									<div class="row">
+
+										<div class="col-lg-6 mb-30">
+											<label>Name<span>*</span></label>
+
+											<div class="form-control" id="username">[[${#request.remoteUser}]]</div>
+										</div>
+										<div class="col-lg-6 mb-30">
+											<label>Create Date <span>*</span></label>
+											<input type="text" class="form-control"
+												value="{{order.createDate | date: 'dd-MM-yyyy'}}" readonly>
+										</div>
+										<div class="col-lg-6 mb-30">
+											<label>Phone <span>*</span></label>
+											<input type="text" id="phoneInput" class="form-control"
+												ng-model="order.ordPhone">
+											<!-- <div class="form-control" ng-model="order.ordPhone">{{ form.phone }}</div> -->
+										</div>
+										<div class="col-lg-6 mb-30">
+											<label>Address <span>*</span></label>
+											<input type="text" id="addressInput" class="form-control"
+												ng-model="order.order_address">
+											<!-- <div class="form-control" ng-model="order.order_address">{{
+												form.account_adress }}</div> -->
+										</div>
+										<div class="col-lg-6 mb-30">
+											<label>Ghi Chú <span>*</span></label>
+											<textarea id="noteInput" class="form-control" ng-model="order.ghiChu"rows="3"
+												placeholder="Nhập ghi chú của bạn tại đây..."></textarea>
+										</div>
+
+
+
+										<p th:text="${message}" th:if="${param.message}"></p>
+									</div>
+								</form>
+								<div class="row mt-3">
+									<div class="col-lg-6 col-md-6">
+										<div class="coupon_code">
+											<h3>Coupon</h3>
+											<div class="coupon_inner">
+												<p>Enter your coupon code if you have one.</p>
+												<form id="voucherForm" action="/apply-voucher" method="post">
+													<input id="voucherId" name="voucherId" placeholder="voucher"
+														type="text">
+													<button type="submit">Apply coupon</button>
+												</form>
+												<!-- Thông báo -->
+												<p th:if="${successMsg}" class="success-msg" th:text="${successMsg}">
+
+												</p>
+												<p th:if="${successMsg}">
+													Bạn được giảm <Strong id="discountPercentageCell"
+														th:text="${discountPercentage} + ' %'"></Strong>
+												</p>
+												<p th:if="${errorMsg}" class="error-msg" th:text="${errorMsg}"></p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+							<div class="col-lg-6 col-md-6">
+								<form action="#">
+									<h3>Your order</h3>
+									<div class="order_table table-responsive mb-30">
+										<table>
+											<thead>
+												<tr>
+													<th>Product</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="item in cart.items">
+													<td>{{item.prodName}} <strong> × {{item.qty}}</strong></td>
+													<td>{{item.qty * item.price | number:2 }} đ</td>
+												</tr>
+
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>Tổng phụ</th>
+													<td id="cartAmount" ng-bind="(cart.amount | number:2) + ' đ'"></td>
+												</tr>
+												<tr th:if="${successMsg}">
+													<th>Voucher</th>
+													<td th:text="${voucherName} "></td>
+
+												</tr>
+												<tr th:if="${successMsg}">
+													<th>Số tiền được giảm</th>
+													<td id="discountAmountCell"></td>
+
+												</tr>
+												<tr>
+													<th>Giá Ship</th>
+													<td><strong>15,000 đ</strong></td>
+												</tr>
+												<input type="hidden" id="voucherApplied" th:value="${voucherApplied}" />
+												<input type="hidden" id="hiddenTotalAmount" name="priceSum" value="" />
+
+												<tr class="order_total" id="totalAmountRow" style="font-size: 20px;">
+													<th>Tổng thành tiền</th>
+													<td>
+														<strong
+															ng-bind="(cart.amount + 15000 | number:2) + ' đ'"></strong>
+													</td>
+												</tr>
+
+												<tr class="order_total" th:if="${successMsg}" style="font-size: 20px;">
+													<th>Tổng thành tiền </th>
+													<td>
+														<strong id="calculatedAmount"></strong>
+													</td>
+
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<div class="payment_method">
+
+										<div class="panel-default">
+											<input id="payment_defult" name="check_method" type="radio"
+												data-target="createp_account">
+											<label for="payment_defult" data-toggle="collapse"
+												data-target="#collapsedefult" aria-controls="collapsedefult">PayPal
+												<img src="/user/assets/img/visha/papyel.png" alt="">
+											</label>
+
+											<!-- <div id="collapsedefult" class="collapse one" data-parent="#accordion">
+                                            <div class="card-body1">
+                                                <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                            </div>
+                                        </div> -->
+										</div>
+										<div class="order_button">
+											<button ng-click="order.purchase()" type="submit">Xác nhận hoàn tất đơn
+												hàng</button>
+										</div>
+									</div>
+								</form> <br>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Checkout page section end-->
+				<script>
+					document.addEventListener('DOMContentLoaded', function () {
+						// Lấy giá trị của tổng số tiền từ phần tử có id "cartAmount"
+						var cartAmount = parseFloat(document.getElementById('cartAmount').textContent.replace(/\,/g, '').replace(' đ', ''));
+
+						// Lấy giá trị của tỉ lệ chiết khấu từ phần tử có id "discountPercentageCell"
+						var discountPercentage = parseFloat(document.getElementById('discountPercentageCell').textContent.replace(' %', ''));
+
+						// Tính số tiền được giảm
+						var discountAmount = (cartAmount * discountPercentage) / 100;
+
+						// Hiển thị số tiền được giảm lên giao diện
+						document.getElementById('discountAmountCell').textContent = discountAmount.toFixed(2) + ' đ';
+
+						// Tính tổng thành tiền
+						var totalAmount = cartAmount - discountAmount + 15000;
+
+						// Hiển thị tổng thành tiền lên giao diện
+						document.getElementById('calculatedAmount').textContent = totalAmount.toFixed(2) + ' đ';
+					});
+
+
+					// lưu priceSum
+					document.addEventListener('DOMContentLoaded', function () {
+						var cartAmount = parseFloat(document.getElementById('cartAmount').textContent.replace(/\,/g, '').replace(' đ', ''));
+						var voucherApplied = document.getElementById('voucherApplied').value;
+
+						if (voucherApplied === "true") { // Nếu có voucher
+							var discountPercentage = parseFloat(document.getElementById('discountPercentageCell').textContent.replace(' %', ''));
+							var discountAmount = (cartAmount * discountPercentage) / 100;
+							var totalAmount = cartAmount - discountAmount + 15000;
+							document.getElementById('hiddenTotalAmount').value = totalAmount.toFixed(2);
+							document.getElementById('totalAmountRow').style.display = 'none'; // Ẩn phần tổng thành tiền trên giao diện
+						} else { // Nếu không có voucher
+							var totalAmount = cartAmount + 15000; // Tính tổng giá trị trên giao diện
+							document.getElementById('hiddenTotalAmount').value = totalAmount.toFixed(2); // Cập nhật hiddenTotalAmount
+						}
+					});
+
+
+
+
+
+
+					//lưu input voucher
+					const voucherInput = document.getElementById('voucherId');
+
+					// Kiểm tra xem liệu có dữ liệu đã được lưu trong Local Storage hay không
+					const savedVoucherId = localStorage.getItem('savedVoucherId');
+
+					// Nếu có, gán giá trị đã lưu vào trường input
+					if (savedVoucherId) {
+						voucherInput.value = savedVoucherId;
+					}
+
+					// Lắng nghe sự kiện khi người dùng thay đổi giá trị trong trường input
+					voucherInput.addEventListener('input', function () {
+						// Lưu giá trị của trường input vào Local Storage mỗi khi có sự thay đổi
+						localStorage.setItem('savedVoucherId', voucherInput.value);
+					});
+
+					const voucherForm = document.getElementById('voucherForm');
+
+					// Lắng nghe sự kiện khi form được submit
+					voucherForm.addEventListener('submit', function (event) {
+						// Kiểm tra nếu có dữ liệu trong trường input
+						if (voucherInput.value.trim() !== '') {
+							// Lưu giá trị của trường input vào Local Storage
+							localStorage.setItem('savedVoucherId', voucherInput.value);
+						}
+
+					});
+
+
+					
+
+
+
+
+
+				</script>
+
+
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{/common/user/js}"></div>
+	<div th:replace="~{/common/user/footer}"></div>
+</body>
+
+</html>

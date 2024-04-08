@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+	<div th:replace="~{/common/user/head}"></div>
+</head>
+
+<body class="" ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+
+	<div class="pos_page">
+		<div class="container">
+			<!--pos page inner-->
+			<div class="pos_page_inner">
+
+				<div th:replace="~{/common/user/header}"></div>
+
+				<!--breadcrumbs area start-->
+				<div class="breadcrumbs_area">
+					<div class="row">
+						<div class="col-12">
+							<div class="breadcrumb_content">
+								<ul>
+									<li><a href="index.html">home</a></li>
+									<li><i class="fa fa-angle-right"></i></li>
+									<li>Sản phẩm yêu thích</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--breadcrumbs area end-->
+
+
+				<!--shopping cart area start -->
+				<div class="shopping_cart_area">
+					<form action="#">
+						<div class="row">
+							<div class="col-12">
+								<div class="table_desc wishlist">
+									<div class="cart_page table-responsive">
+										<table>
+											<thead>
+												<tr>
+													<th class="product_remove">Delete</th>
+													<th class="product_thumb">Image</th>
+													<th class="product_name">Product</th>
+													<th class="product-price">Price</th>
+													<th class="product_quantity">Số Lượng Còn Lại</th>
+													<th class="product_total">Add To Cart</th>
+												</tr>
+											</thead>
+
+
+											<tbody>
+												<tr ng-repeat="item in favorites.itemYt">
+
+													<td class="product_remove">
+														<a href="#"
+															ng-click="favorites.removeFromFavorites(item.idYt)">X</a>
+													</td>
+
+
+													<td class="product_thumb">
+														<a ng-href="detail/{{item.id}}">
+															<img ng-src="{{item.image}}" alt="{{ item.prodName }}"
+																style="width: 100px;">
+														</a>
+													</td>
+													<td class="product_name">{{ item.prodName }}</td>
+													<td class="product-price">{{ item.price }}</td>
+													<td class="product_quantity">{{ item.quantity }}</td>
+													<td class="product_total"><a href="#"
+															ng-click="cart.add(item.proId)">Add To Cart</a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+								</div>
+								<div class="cart_submit">
+										<button ng-click="favorites.clearSpyt()" type="submit">Xóa hết sản phẩm</button>
+									</div>
+							</div>
+						</div>
+
+					</form>
+					<div class="row">
+						<div class="col-12">
+							<div class="wishlist-share">
+								<h4>Share on:</h4>
+								<ul>
+									<li><a href="#"><i class="fa fa-rss"></i></a></li>
+									<li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+									<li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+									<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+									<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--shopping cart area end -->
+
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="~{/common/user/js}"></div>
+	<div th:replace="~{/common/user/footer}"></div>
+
+</body>
+
+</html>

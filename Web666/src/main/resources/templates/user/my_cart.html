@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+	<div th:replace="~{/common/user/head}"></div>
+</head>
+
+<body ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+	<div class="pos_page">
+		<div class="container">
+			<!--pos page inner-->
+			<div class="pos_page_inner">
+				<div th:replace="~{/common/user/header}"></div>
+
+
+				<!--breadcrumbs area start-->
+				<div class="breadcrumbs_area">
+					<div class="row">
+						<div class="col-12">
+							<div class="breadcrumb_content">
+								<ul>
+									<li><a href="#">home</a></li>
+									<li><i class="fa fa-angle-right"></i></li>
+									<li>giỏ hàng</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--breadcrumbs area end-->
+
+				<!--shopping cart area start -->
+				<div class="shopping_cart_area" th:fragment="cart-view">
+					<form action="#">
+						<div class="row">
+							<div class="col-12">
+								<div class="table_desc">
+									<div class="cart_page table-responsive">
+										<table>
+											<thead>
+												<tr>
+													<th class="product_remove">Xóa</th>
+													<th class="product_thumb">Ảnh</th>
+													<th class="product_name">Sản phẩm</th>
+													<th class="product-price">GIÁ</th>
+													<th class="product_quantity">Số lượng</th>
+													<th class="product_total">Tổng</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="item in cart.items">
+													<td class="product_remove">
+														<a title="Xóa sản phẩm" ng-click="cart.remove(item.id)">
+															<i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+													<td class="product_thumb">
+														<a ng-href="detail/{{item.proId}}">
+															<img ng-src="{{item.image}}" alt="Product Image"
+																style="width: 100px;">
+														</a>
+													</td>
+													<td class="product_name"><a href="#">{{item.prodName}}</a></td>
+													<td class="product-price">{{item.price | number : 2}}</td>
+													<td><input ng-change="cart.saveToLocalStorage()" ng-model="item.qty"
+															type="number" min="1"></td>
+													<td class="product_total">{{item.qty * item.price | number:2}}</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+									<div class="cart_submit">
+										<button ng-click="cart.clear()" type="submit">Xóa hết sản phẩm</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--coupon code area start-->
+
+						<div>
+							<div class="col-lg-6 col-md-6">
+
+							</div>
+
+
+
+						</div>
+						<div class="col-lg-6 col-md-6">
+							<div class="coupon_code">
+								<h3>TỔNG Tiền GIỎ HÀNG</h3>
+								<div class="coupon_inner">
+									<div class="cart_subtotal">
+										<p>Tổng phụ</p>
+										<p class="cart_amount" ng-bind="(cart.amount | number:2) +' đ'"></p>
+									</div>
+									<div class="cart_subtotal ">
+										<p>Giá Ship</p>
+										<p class="cart_amount">
+											<span>Giá cố định:</span> 15.000 đ
+										
+										</p>
+									</div>
+									<a href="#">Tính toán vận chuyển</a>
+
+									<div class="cart_subtotal">
+										<p>Tổng cộng</p>
+										<p class="cart_amount" ng-bind="(cart.amount +15000 | number:2) +' đ'"></p>
+										</p>
+									</div>
+									<div class="checkout_btn">
+										<a th:href="@{/order/checkout}">Tiến hành kiểm tra</a>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<!--coupon code area end-->
+
+		</div>
+		<!--shopping cart area end -->
+
+
+
+
+	</div>
+	</div>
+	<div th:replace="~{/common/user/js}"></div>
+	<div th:replace="~{/common/user/footer}"></div>
+
+
+
+</body>
+
+</html>

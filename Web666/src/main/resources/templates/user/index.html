@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+	<div th:replace="~{/common/user/head}"></div>
+
+</head>
+
+<body class="" ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+	<div th:replace="~{/common/user/header}"></div>
+
+	<!--	pos home section-->
+	<div class="pos_home_section">
+		<div class="row">
+			<!--banner slider start-->
+			<div class="col-12">
+				<div class="banner_slider slider_two">
+					<div class="slider_active owl-carousel">
+						<div class="single_slider" style="background-image: url(/user/assets/img/slider/slider2.PNG)">
+							<div class="slider_content">
+								<div class="slider_content_inner">
+									<h1></h1>
+									<p>
+										 </p>
+									<a href="#"></a>
+								</div>
+							</div>
+						</div>
+						<div class="single_slider" style="background-image: url(/user/assets/img/slider/slide1.PNG)">
+							<div class="slider_content">
+								<div class="slider_content_inner">
+									<h1></h1>
+									<p>
+										
+									</p>
+									<a href="#"></a>
+								</div>
+							</div>
+						</div>
+						<div class="single_slider" style="background-image: url(/user/assets/img/slider/slider3.PNG)">
+							<div class="slider_content">
+								<div class="slider_content_inner">
+									<h1></h1>
+									<p>
+										
+									</p>
+									<a href="#"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--banner slider start-->
+			</div>
+		</div>
+		<!--new product area start-->
+		<div class="new_product_area product_two" th:each="c:${catesIndex}">
+			<div class="row">
+				<div class="col-12">
+					<div class="block_title">
+						<h3 th:href="@{|/product/list/${c.cateId}|}">[[${c.cateName}]]</h3>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="single_p_active owl-carousel">
+					<div th:each="p : ${productMap['items_' + c.cateId]}" class="col-lg-3">
+						<div class="single_product">
+							<div class="product_thumb">
+								<a th:href="@{|/product/detail/${p.proId}|}">
+									<img th:src="@{|/assets/images/${p.image1}|}" alt=""
+										style="width: 300px; height: 200px;">
+								</a>
+								<!-- <div class="img_icone">
+                                    <img src="user/assets/img/cart/span-new.png" alt="" style="width: auto; height: auto;">
+                                </div> -->
+								<div class="product_action">
+									<a th:attr="ng-click=@{|cart.add('${p.proId}')|}" href="#">
+										<i class="fa fa-shopping-cart"></i> Thêm sản phẩm
+									</a>
+								</div>
+							</div>
+							<div class="product_content">
+								<span class="product_price" th:text="${p.price}"></span>
+								<h3 class="product_title">
+									<a th:href="@{|/product/detail/${p.proId}|}" th:utext="${p.prodName}"></a>
+								</h3>
+							</div>
+
+							<div class="product_info">
+								<ul>
+									<li><a href="#" data-toggle="modal" th:attr="ng-click=@{|openModal('${p.proId}')|}"
+											data-target="#modal_box" title="Quick view">Show sản phẩm</a></li>
+
+									<a href="#" title="add to wishlist"
+										th:attr="ng-click=@{|favorites.add('${p.proId}')|}">
+										<i class="fa fa-heart" aria-hidden="true"></i>
+									</a>
+
+
+								</ul>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--new product area start-->
+
+		<!--banner area start-->
+		<div class="banner_area banner_two">
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="single_banner">
+						<a href="#"><img src="/user/assets/img/banner/banner8.jpg" alt=""></a>
+						<div class="banner_title">
+							<p>
+								Up to <span> 40%</span> off
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single_banner">
+						<a href="#"><img src="/user/assets/img/banner/banner11.jpg" alt=""></a>
+						<div class="banner_title title_2">
+							<p>
+								sale off <span> 30%</span>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single_banner">
+						<a href="#"><img src="/user/assets/img/banner/banner13.jpg" alt=""></a>
+						<div class="banner_title title_3">
+							<p>
+								sale off <span> 30%</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--banner area end-->
+
+
+
+
+	</div>
+
+	<!-- modal area start -->
+	<div class="modal fade" id="modal_box" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="modal_body" ng-init="modalPro ">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-5 col-md-5 col-sm-12">
+								<div class="modal_tab">
+									<div class="tab-content" id="pills-tabContent">
+										<div class="tab-pane fade show active" id="tab1" role="tabpanel">
+
+											<!-- Thực hiện các thao tác với modalPro tại đây -->
+											<div class="modal_tab_img">
+												<a ng-href="/product/detail/{{modalPro.proId}}">
+													<img ng-src="{{modalPro.image}}">
+												</a>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+							<div class="col-lg-7 col-md-7 col-sm-12">
+
+								<div class="modal_right">
+									<div class="modal_title mb-10">
+										<h2>{{modalPro.prodName}}</h2>
+									</div>
+									<div class="modal_price mb-10">
+										<span class="new_price">Price: {{modalPro.price}}</span>
+									</div>
+									<div class="modal_content mb-10">
+										<span>Create Date: {{modalPro.createDate}}</span>
+									</div>
+									<div class="modal_content mb-10">
+										<p>Describe: {{modalPro.describe}}
+										</p>
+
+									</div>
+
+									<div class="modal_add_to_cart mb-15">
+										<form action="#">
+
+											<button ng-click="cart.add(modalPro.proId)" type="submit">add to
+												cart</button>
+										</form>
+									</div>
+
+									<div class="modal_social">
+										<h2>Share this product</h2>
+										<ul>
+											<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+											<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+											<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+											<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+											<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div th:replace="~{/common/user/js}"></div>
+	<div th:replace="~{/common/user/footer}"></div>
+
+	<!-- modal area end -->
+
+</body>
+
+</html>

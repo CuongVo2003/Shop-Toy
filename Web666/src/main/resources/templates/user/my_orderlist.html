@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Insert title here</title>
+	<div th:replace="~{/common/user/head}"></div>
+</head>
+
+<body class="" ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+	<!--pos page start-->
+	<div class="pos_page">
+		<div class="container">
+			<!--pos page inner-->
+			<div class="pos_page_inner">
+				<div th:replace="~{/common/user/header}"></div>
+
+
+				<!--breadcrumbs area start-->
+				<div class="breadcrumbs_area">
+					<div class="row">
+						<div class="col-12">
+							<div class="breadcrumb_content">
+								<ul>
+									<li><a href="index.html">home</a></li>
+									<li><i class="fa fa-angle-right"></i></li>
+									<li>Đơn hàng của tôi</li>
+								</ul>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--breadcrumbs area end-->
+
+
+				<!-- Start Maincontent  -->
+				<section class="main_content_area">
+					<div class="account_dashboard">
+						<div class="row">
+							<div class="col-sm-12 col-md-3 col-lg-3">
+								<!-- Nav tabs -->
+								<div class="dashboard_tab_button">
+									<ul role="tablist" class="nav flex-column dashboard-list">
+
+										<li><a th:href="@{/order/list}" data-toggle="tab" class="nav-link active">Orders
+												List</a>
+										</li>
+
+										<li><a th:href="@{/user/account}" data-toggle="tab" class="nav-link">Account
+												details</a></li>
+										<li><a th:href="@{/security/logoff}" class="nav-link">logout</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-9 col-lg-9">
+								<!-- Tab panes -->
+								<div class="tab-content dashboard_content">
+
+									<div class="tab-pane fade show active" id="orders">
+										<h3>Orders List</h3>
+										<div class="coron_table table-responsive">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>No</th>
+														<th>Order No</th>
+														<th>Order Date</th>
+														<th>Phone</th>
+														<th>Address</th>
+														<th>Total Amount</th>
+														<th>Note</th>
+														<th>Tình Trạng</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="order,state : ${orderList}">
+														<td th:text="${state.index}"></td>
+														<td th:text="${order.ordId}"></td>
+														<td th:text="${order.createDate}"></td>
+														<td th:text="${order.ordPhone}"></td>
+														<td th:text="${order.order_address}"></td>
+														<td th:text="${order.priceSum}"></td>
+														<td th:text="${order.ghiChu}"></td>
+														<td>
+															<span
+																th:if="${order.tinhTrang == null or order.tinhTrang}">Đã
+																nhận hàng</span>
+															<span
+																th:unless="${order.tinhTrang == null or order.tinhTrang}">Đang
+																giao
+																hàng</span>
+
+														</td>
+														<td><a th:href="@{/order/detail/{id}(id=${order.ordId})}"
+																class="view">view</a>
+
+														</td>
+														</td>
+
+													</tr>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+
+									<div class="tab-pane fade" id="account-details">
+										<h3>Account details</h3>
+										<div class="login">
+											<div class="login_form_container">
+												<div class="account_login_form">
+													<form action="#">
+														<p>
+															Already have an account? <a href="#">Log in instead!</a>
+														</p>
+														<div class="input-radio">
+															<span class="custom-radio"><input type="radio" value="1"
+																	name="id_gender"> Mr.</span> <span
+																class="custom-radio"><input type="radio" value="1"
+																	name="id_gender"> Mrs.</span>
+														</div>
+														<br> <label>First Name</label> <input type="text"
+															name="first-name"> <label>Last Name</label> <input
+															type="text" name="last-name"> <label>Email</label>
+														<input type="text" name="email-name">
+														<label>Password</label>
+														<input type="password" name="user-password">
+														<label>Birthdate</label>
+														<input type="text" placeholder="MM/DD/YYYY" value=""
+															name="birthday"> <span class="example">
+															(E.g.: 05/31/1970) </span> <br> <span
+															class="custom_checkbox"> <input type="checkbox" value="1"
+																name="optin"> <label>Receive
+																offers from our partners</label>
+														</span> <br> <span class="custom_checkbox"> <input
+																type="checkbox" value="1" name="newsletter">
+															<label>Sign
+																up for our newsletter<br>
+																<em>You may unsubscribe at any moment. For that
+																	purpose, please find our contact info in the
+																	legal
+																	notice.</em>
+															</label>
+														</span>
+														<div class="save_button primary_btn default_button">
+															<a href="#">Save</a>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- End Maincontent  -->
+
+			</div>
+		</div>
+	</div>
+	<div th:replace="~{/common/user/js}"></div>
+	<div th:replace="~{/common/user/footer}"></div>
+
+
+</body>
+
+</html>
